@@ -40,7 +40,7 @@ function App() {
   };
   const handleCopySuccess = (s) => {
     setToast("Copied " + s);
-    setToastColor("green");
+    setToastColor("bg-green-500");
     setToastFade(true);
     setToastMove(false);
 
@@ -68,7 +68,7 @@ function App() {
   };
   const handleCopyFail = (s) => {
     setToast("Fail to copy " + s);
-    setToastColor("red");
+    setToastColor("bg-red-500");
   };
 
   return (
@@ -76,10 +76,8 @@ function App() {
       <div className="max-w-xl mx-auto">
         <div
           className={
-            "mt-5 h-auto w-full p-4 my-4 mx-auto rounded-md text-center text-xl " +
-            "border text-white bg-" +
-            toastColor +
-            "-500 " +
+            "mt-5 h-auto w-full p-4 my-4 mx-auto rounded-md text-center text-xl border text-white "
+            + toastColor + " " + 
             (toastFade ? "opacity-0 " : "") +
             "transition transform duration-300  " +
             (toastMove
@@ -120,7 +118,7 @@ function App() {
                 htmlFor="start_time"
                 className="block text-sm font-medium text-gray-700"
               >
-                Start time
+                Start time (ex: -1d, -4h)
               </label>
               <input
                 type="text"
@@ -135,7 +133,7 @@ function App() {
                 htmlFor="end_time"
                 className="block text-sm font-medium text-gray-700"
               >
-                End time
+                End time (ex: -10m, -30s)
               </label>
               <input
                 type="text"
