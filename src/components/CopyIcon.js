@@ -9,7 +9,7 @@ const CopyIcon = (props) => {
       stroke="currentColor"
       width="20px"
       height="20px"
-      className="transform transition mt-0.5 text-gray-600 group-hover:text-black group-hover:scale-110"
+      className={"transform transition mt-0.5 text-gray-600 group-hover:text-black group-hover:scale-125 " + (props.hovered ? "text-black scale-125" : "")}
     >
       <path
         strokeLinecap="round"

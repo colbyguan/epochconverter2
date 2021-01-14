@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import logo from "./logo.svg";
-import "./App.css";
 import CopyableRow from "./components/CopyableRow";
 import { timeStringToOffset } from "./helpers";
 
@@ -24,7 +23,7 @@ function App() {
   const [toastFade, setToastFade] = useState(false);
   const [toastMove, setToastMove] = useState(false);
   let [timeouts, setTimeouts] = useState([]);
-  
+
   const [now, setNow] = useState(Math.round(Date.now() / 1000));
   const nowDate = new Date(0);
   nowDate.setUTCSeconds(now);
@@ -73,11 +72,11 @@ function App() {
 
   return (
     <div className="container mx-auto">
-      <div className="max-w-xl mx-auto">
+      <div className="max-w-3xl mx-auto">
         <div
           className={
             "mt-5 h-auto w-full p-4 my-4 mx-auto rounded-md text-center text-xl border text-white "
-            + toastColor + " " + 
+            + toastColor + " " +
             (toastFade ? "opacity-0 " : "") +
             "transition transform duration-300  " +
             (toastMove
@@ -87,10 +86,8 @@ function App() {
         >
           {toast}
         </div>
-        <div className="vspace">
-          <span className="now">{now}</span> or <span className="now">{nowFormatted}</span> as the "now" time
-        </div>
-        <div className="vspace">
+
+        {/* <div className="vspace">
           <div className="inline-flex mr-1">Show units: </div>
           <div className="cursor-pointer inline-flex shadow-sm -space-x-px">
             {UNIT_OPTIONS.map((optionName, i) => (
@@ -109,14 +106,17 @@ function App() {
               </a>
             ))}
           </div>
-        </div>
+        </div> */}
         <div className="card-container">
-          <div className="grid grid-cols-3 gap-2">
-            <div></div>
-            <div>
+          <div className="my-10 text-center">
+            <span className="text-3xl font-bold mr-1">{now}</span> as the "now" time
+          </div>
+          <div className="card-grid mb-6">
+            <div className="side-col"></div>
+            <div className="main-col">
               <label
                 htmlFor="start_time"
-                className="block text-sm font-medium text-gray-700"
+                className="textinput-label"
               >
                 Start time (ex: -1d, -4h)
               </label>
@@ -126,12 +126,13 @@ function App() {
                 id="start_time"
                 className="textinput"
                 onChange={handleStartChange}
+                value={start}
               />
             </div>
-            <div>
+            <div className="main-col">
               <label
                 htmlFor="end_time"
-                className="block text-sm font-medium text-gray-700"
+                className="textinput-label"
               >
                 End time (ex: -10m, -30s)
               </label>
@@ -141,8 +142,13 @@ function App() {
                 id="end_time"
                 className="textinput"
                 onChange={handleEndChange}
+                value={end}
               />
             </div>
+          </div>
+          <div className="card-grid mt-4 text-gray-400 text-sm font-medium">
+            <div className="side-col"></div>
+            <div className="main-col">seconds</div>
           </div>
           <CopyableRow
             now={now}
@@ -151,6 +157,10 @@ function App() {
             handleCopySuccess={handleCopySuccess}
             handleCopyFail={handleCopyFail}
           />
+          <div className="card-grid mt-4 text-gray-400 text-sm font-medium">
+            <div className="side-col"></div>
+            <div className="main-col">millis</div>
+          </div>
           <CopyableRow
             now={now * 1000}
             startOffset={startOffset * 1000}
@@ -158,13 +168,14 @@ function App() {
             handleCopySuccess={handleCopySuccess}
             handleCopyFail={handleCopyFail}
           />
+          <div className="my-10 h-1 w-1"></div>
         </div>
-        <div className="text-lg font-medium leading-6 text-gray-900 mt-5">
+        {/* <div className="text-lg font-medium leading-6 text-gray-900 mt-5">
           Previous timestamps
         </div>
         <div className="card-container">
-        Feature coming soon
-        </div>
+          Feature coming soon
+        </div> */}
       </div>
     </div>
   );

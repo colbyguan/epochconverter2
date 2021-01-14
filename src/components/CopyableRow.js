@@ -27,15 +27,15 @@ const CopyableRow = (props) => {
   };
 
   return (
-    <div className={"grid grid-cols-3 px-2 " + (hovered ? "gap-0" : "gap-2")}>
+    <div className={"card-grid " + (hovered ? "gap-0 bg-yellow-200 " : "")}>
       <div
         onMouseEnter={handleEnter}
         onMouseLeave={handleLeave}
         onClick={copyStartEnd}
-        className="group cursor-pointer hover:bg-yellow-200 rounded-md flex flex-row m-1 px-2 py-1"
+        className={"side-col text-sm cursor-pointer hover:bg-yellow-200 rounded-sm flex flex-row items-center justify-end font-medium py-2 px-4 "}
       >
-        <CopyIcon />
-        start:end
+        <CopyIcon hovered={hovered} />
+        <span className="ml-0.5">start:end</span>
       </div>
       <CopyableTime
         borderColor={startBorderColor}
@@ -60,7 +60,7 @@ const borderColorFromOffset = (offset) => {
   if (offset < 0) {
     return "border-red-500";
   } else if (offset === 0) {
-    return "border-gray-300";
+    return "border-gray-200";
   } else {
     return "border-green-500";
   }
@@ -88,15 +88,17 @@ const CopyableTime = (props) => {
     <div
       onClick={copyTs}
       className={
-        "group border w-full cursor-pointer hover:bg-blue-200 flex flex-row my-1 px-2 py-1 " +
+        "copyable-time group " +
         (hovered
-          ? "bg-yellow-300 rounded-none border-yellow-300 "
-          : props.borderColor + " rounded-md ") +
-        (hovered && alignLeft ? "rounded-l-md " : "rounded-r-md")
+          ? "bg-yellow-200 rounded-none border-yellow-200 "
+          : props.borderColor + " rounded-sm app-shadow-sm ") +
+        (hovered && alignLeft ? "rounded-l-sm" : "rounded-r-sm")
       }
     >
-      {!hovered ? <CopyIcon /> : ""}
-      <div className={"w-full " + (hovered && alignLeft ? "text-right" : "")}>
+      {!hovered ? <CopyIcon hovered={hovered} /> : ""}
+      <div className={"w-full font-medium " +
+        (hovered && alignLeft ? "text-right " : "") +
+        (hovered && !alignLeft ? "-ml-10 " : "")}>
         {props.ts + (hovered && alignLeft ? " : " : "")}
       </div>
     </div>

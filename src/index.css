@@ -3,11 +3,32 @@
 @tailwind components;
 @tailwind utilities;
 
+.app-shadow-sm {
+    box-shadow: rgba(0, 0, 0, 0.06) 0px 4px 6px -1px, rgba(0, 0, 0, 0.01) 0px 2px 4px -1px;
+}
+.app-shadow-lg {
+    box-shadow: rgba(17, 12, 46, 0.15) 0px 48px 100px 0px;
+}
+.side-col {
+    @apply col-span-2;
+}
+.main-col {
+    @apply col-span-4;
+}
 .textinput {
-    @apply py-2 px-3 border mt-1 focus:ring-blue-400 focus:border-blue-400 block w-full sm:text-sm border-gray-300 rounded-md;
+    @apply app-shadow-sm text-lg py-2 px-3 border mt-1 focus:ring-blue-400 focus:border-blue-400 block w-full sm:text-sm border-gray-300 rounded-sm;
+}
+.copyable-time {
+    @apply main-col border w-full cursor-pointer hover:bg-blue-200 flex flex-row my-1 py-2 px-4;
+}
+.textinput-label {
+    @apply block text-sm font-semibold text-gray-500;
 }
 .card-container {
-    @apply px-4 py-5 bg-white my-3 shadow overflow-hidden sm:rounded-lg;
+    @apply app-shadow-lg px-10 py-5 bg-white my-3 overflow-hidden sm:rounded-sm;
+}
+.card-grid {
+    @apply grid grid-cols-11 gap-4;
 }
 .copylabel {
     @apply text-gray-500 text-sm;
@@ -20,7 +41,4 @@
 }
 .vspace {
     @apply my-4
-}
-.now {
-    @apply p-2 rounded-md bg-indigo-200 font-semibold
 }
