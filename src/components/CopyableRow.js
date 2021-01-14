@@ -75,7 +75,6 @@ const timeTextFromNowAndOffset = (now, offset) => {
 
 const CopyableTime = (props) => {
   const hovered = props.hovered;
-  const ts = props.ts;
   const alignLeft = props.alignLeft;
 
   const copyTs = () => {

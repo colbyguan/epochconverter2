@@ -1,10 +1,13 @@
 import React, { useState } from "react";
-import logo from "./logo.svg";
 import CopyableRow from "./components/CopyableRow";
 import { timeStringToOffset } from "./helpers";
 
-const UNIT_OPTIONS = ['both', 'millis', 'seconds']
-const REALTIME_OPTIONS = ['page load', 'realtime']
+// const UNIT_OPTIONS = ['both', 'millis', 'seconds']
+// const REALTIME_OPTIONS = ['page load', 'realtime']
+const QUICK_TIMESTAMPS = [
+  ['-0m', '-5m', '-10m', '-15m', '-30m'],
+  ['-1h', '-2h', '-4h', '-8h', '-12h', '-24h', '-36h'],
+  ['-2d', '-4d', '-7d']]
 
 function App() {
   // Time values
@@ -12,10 +15,11 @@ function App() {
   const [end, setEnd] = useState("");
   const [startOffset, setStartOffset] = useState(0);
   const [endOffset, setEndOffset] = useState(0);
+  const [lastFocusedWasStart, setLastFocusedWasStart] = useState(true);
 
   // Options
-  const [unitOption, setUnitOption] = useState(0)
-  const [realtimeOption, setRealtimeOption] = useState(0)
+  // const [unitOption, setUnitOption] = useState(0)
+  // const [realtimeOption, setRealtimeOption] = useState(0)
 
   // Animation
   const [toast, setToast] = useState("hello");
@@ -24,11 +28,19 @@ function App() {
   const [toastMove, setToastMove] = useState(false);
   let [timeouts, setTimeouts] = useState([]);
 
-  const [now, setNow] = useState(Math.round(Date.now() / 1000));
+  const [now] = useState(Math.round(Date.now() / 1000));
   const nowDate = new Date(0);
   nowDate.setUTCSeconds(now);
-  const nowFormatted = nowDate.toLocaleString();
 
+  const handleQuickTimestamp = (ts) => {
+    if (lastFocusedWasStart) {
+      setStart(ts);
+      setStartOffset(timeStringToOffset(ts));
+    } else {
+      setEnd(ts);
+      setEndOffset(timeStringToOffset(ts));
+    }
+  }
   const handleStartChange = (e) => {
     setStart(e.target.value);
     setStartOffset(timeStringToOffset(e.target.value));
@@ -113,6 +125,23 @@ function App() {
           </div>
           <div className="card-grid mb-6">
             <div className="side-col"></div>
+            <div className="double-main-col">
+              <div className="textinput-label mb-1">quick fill {(lastFocusedWasStart ? "start time" : "end time")}:</div>
+              {QUICK_TIMESTAMPS.map((unit, rowIdx) =>
+                <div className="">
+                  {unit.map(timestamp => (
+                    <div
+                      className={"w-10 p-1 text-sm text-right cursor-pointer inline-block font-mono border-gray-300 " + (rowIdx === 1 ? "" : "")}
+                      onClick={(e) => handleQuickTimestamp(timestamp)}
+                      key={timestamp}>
+                      {timestamp}
+                    </div>
+                  ))}
+                </div>)}
+            </div>
+          </div>
+          <div className="card-grid mb-6">
+            <div className="side-col"></div>
             <div className="main-col">
               <label
                 htmlFor="start_time"
@@ -126,6 +155,7 @@ function App() {
                 id="start_time"
                 className="textinput"
                 onChange={handleStartChange}
+                onFocus={(e) => setLastFocusedWasStart(true)}
                 value={start}
               />
             </div>
@@ -142,6 +172,7 @@ function App() {
                 id="end_time"
                 className="textinput"
                 onChange={handleEndChange}
+                onFocus={(e) => setLastFocusedWasStart(false)}
                 value={end}
               />
             </div>
@@ -150,6 +181,7 @@ function App() {
             <div className="side-col"></div>
             <div className="main-col">seconds</div>
           </div>
+
           <CopyableRow
             now={now}
             startOffset={startOffset}
