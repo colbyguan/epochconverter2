@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import clsx from 'clsx';
 import CopyableRow from "./components/CopyableRow";
 import { timeStringToOffset } from "./helpers";
 
@@ -16,6 +17,9 @@ function App() {
   const [startOffset, setStartOffset] = useState(0);
   const [endOffset, setEndOffset] = useState(0);
   const [lastFocusedWasStart, setLastFocusedWasStart] = useState(true);
+  const [ringInput, setRingInput] = useState(false);
+  const [flashQuickFillLabel, setFlashQuickFillLabel] = useState(true);
+  let [flashTimeouts, setFlashTimeouts] = useState([]);
 
   // Options
   // const [unitOption, setUnitOption] = useState(0)
@@ -51,6 +55,11 @@ function App() {
   };
   const handleCopySuccess = (s) => {
     setToast("Copied " + s);
+    window.gtag('event', 'copy', {
+      'event_category': 'user_action',
+      'event_label': 'copied',
+      'value': s
+    })
     setToastColor("bg-green-500");
     setToastFade(true);
     setToastMove(false);
@@ -77,10 +86,24 @@ function App() {
     );
     setTimeouts(timeouts);
   };
+
+  const changeQuickFillLabel = (wasStart) => {
+    setLastFocusedWasStart(wasStart)
+    setFlashQuickFillLabel('bg-blue-200')
+    flashTimeouts.forEach((t) => {
+      clearTimeout(t);
+    });
+    flashTimeouts = []
+    flashTimeouts.push(setTimeout(() => setFlashQuickFillLabel('bg-transparent'), 1000))
+    setFlashTimeouts(flashTimeouts)
+  }
+
   const handleCopyFail = (s) => {
     setToast("Fail to copy " + s);
     setToastColor("bg-red-500");
   };
+  console.log(ringInput && lastFocusedWasStart)
+  console.log(ringInput && lastFocusedWasStart && 'test')
 
   return (
     <div className="container mx-auto">
@@ -126,13 +149,15 @@ function App() {
           <div className="card-grid mb-6">
             <div className="side-col"></div>
             <div className="double-main-col">
-              <div className="textinput-label mb-1">quick fill {(lastFocusedWasStart ? "start time" : "end time")}:</div>
+              <div className="textinput-label mb-1">quick fill <span className={'transition-colors ' + flashQuickFillLabel}>{(lastFocusedWasStart ? "start time" : "end time")}:</span></div>
               {QUICK_TIMESTAMPS.map((unit, rowIdx) =>
                 <div className="">
                   {unit.map(timestamp => (
                     <div
-                      className={"w-10 p-1 text-sm text-right cursor-pointer inline-block font-mono border-gray-300 " + (rowIdx === 1 ? "" : "")}
+                      className={"w-10 p-1 text-sm text-right cursor-pointer inline-block font-mono border-gray-300 hover:bg-blue-200 " + (rowIdx === 1 ? "" : "")}
                       onClick={(e) => handleQuickTimestamp(timestamp)}
+                      onMouseEnter={() => setRingInput(true)}
+                      onMouseLeave={() => setRingInput(false)}
                       key={timestamp}>
                       {timestamp}
                     </div>
@@ -142,7 +167,7 @@ function App() {
           </div>
           <div className="card-grid mb-6">
             <div className="side-col"></div>
-            <div className="main-col">
+            <div className="main-col cursor-pointer">
               <label
                 htmlFor="start_time"
                 className="textinput-label"
@@ -153,26 +178,26 @@ function App() {
                 type="text"
                 name="start_time"
                 id="start_time"
-                className="textinput"
+                className={clsx((ringInput && lastFocusedWasStart && 'border-blue-400') || 'border-gray-300', 'textinput')}
                 onChange={handleStartChange}
-                onFocus={(e) => setLastFocusedWasStart(true)}
+                onFocus={(e) => changeQuickFillLabel(true)}
                 value={start}
               />
             </div>
-            <div className="main-col">
+            <div className="main-col cursor-pointer">
               <label
                 htmlFor="end_time"
                 className="textinput-label"
               >
-                End time (ex: -10m, -30s)
+                End time (click for quick fill)
               </label>
               <input
                 type="text"
                 name="end_time"
                 id="end_time"
-                className="textinput"
+                className={clsx((ringInput && !lastFocusedWasStart && 'border-blue-400') || 'border-gray-300', 'textinput')}
                 onChange={handleEndChange}
-                onFocus={(e) => setLastFocusedWasStart(false)}
+                onFocus={(e) => changeQuickFillLabel(false)}
                 value={end}
               />
             </div>
@@ -209,7 +234,7 @@ function App() {
           Feature coming soon
         </div> */}
       </div>
-    </div>
+    </div >
   );
 }
 

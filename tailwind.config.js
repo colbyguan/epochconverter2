@@ -4,6 +4,7 @@ module.exports = {
   variants: {
     extend: {
       borderRadius: ['first', 'last'],
+      borderWidth: ['hover', 'focus'],
       scale: ['group-hover']
     },
   },

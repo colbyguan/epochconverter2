@@ -32,7 +32,8 @@ const CopyableRow = (props) => {
         onMouseEnter={handleEnter}
         onMouseLeave={handleLeave}
         onClick={copyStartEnd}
-        className={"side-col text-sm cursor-pointer hover:bg-yellow-200 rounded-sm flex flex-row items-center justify-end font-medium py-2 px-4 "}
+        className={"border hover:border-0 my-1 py-2 px-4 side-col text-sm cursor-pointer hover:bg-yellow-200 rounded-sm flex flex-row items-center justify-end font-medium py-2 px-4 " +
+          (hovered ? "" : "app-shadow-sm")}
       >
         <CopyIcon hovered={hovered} />
         <span className="ml-0.5">start:end</span>
