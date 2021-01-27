@@ -144,7 +144,9 @@ function App() {
         </div> */}
         <div className="card-container">
           <div className="my-10 text-center">
-            <span className="text-3xl font-bold mr-1">{now}</span> as the "now" time
+            <div className="mb-2"><span className="text-3xl font-bold">{now}</span> as the "now" time</div>
+            <div className="text-sm text-gray-500">locally, that's <span className="font-semibold">{nowDate.toLocaleString()}</span></div>
+            <div className="text-sm text-gray-500">or <span className="font-semibold">{nowDate.toUTCString()}</span></div>
           </div>
           <div className="card-grid mb-6">
             <div className="side-col"></div>
