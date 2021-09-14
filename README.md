@@ -8,7 +8,7 @@ It is targeted at engineers who may be working with timestamped data like metric
 
 ## Features
 
-On epochconverter.com the best way to get the epoch time for a past timestamp is to have to tediously enter hour/minute/seconds while get the AM/PM and time zone correct. Reclaim your free time with this alternate app's ability to:
+On epochconverter.com the main way to get the epoch time for a past timestamp is to have to tediously enter hour/minute/seconds while get the AM/PM and time zone correct. Reclaim your free time with this alternate app's ability to:
 
 -   One-click copy paste
 -   One-click to fill in common relative time presets
