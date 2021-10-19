@@ -12,3 +12,13 @@ On epochconverter.com the main way to get the epoch time for a past timestamp is
 
 -   One-click copy paste
 -   One-click to fill in common relative time presets
+
+## Development
+This project uses `yarn`
+```bash
+# one-time setup
+yarn
+
+# returning development:
+yarn start
+```

@@ -14,6 +14,7 @@ function App() {
   // Time values
   const [start, setStart] = useState("");
   const [end, setEnd] = useState("");
+  const [delimiter, setDelimiter] = useState(":");
   const [startOffset, setStartOffset] = useState(0);
   const [endOffset, setEndOffset] = useState(0);
   const [lastFocusedWasStart, setLastFocusedWasStart] = useState(true);
@@ -53,6 +54,9 @@ function App() {
     setEnd(e.target.value);
     setEndOffset(timeStringToOffset(e.target.value));
   };
+  const handleDelimChange = (e) => {
+    setDelimiter(e.target.value);
+  }
   const handleCopySuccess = (s) => {
     setToast("Copied " + s);
     window.gtag('event', 'copy', {
@@ -150,7 +154,7 @@ function App() {
           </div>
           <div className="card-grid mb-6">
             <div className="side-col"></div>
-            <div className="double-main-col">
+            <div className="double-main-col relative">
               <div className="textinput-label mb-1">quick fill <span className={'transition-colors ' + flashQuickFillLabel}>{(lastFocusedWasStart ? "start time" : "end time")}:</span></div>
               {QUICK_TIMESTAMPS.map((unit, rowIdx) =>
                 <div className="">
@@ -165,6 +169,21 @@ function App() {
                     </div>
                   ))}
                 </div>)}
+              <div className="delimiter absolute top-0 right-0">
+                <label
+                  htmlFor="start_time"
+                  className="textinput-label"
+                >
+                  Delimiter
+                </label>
+                <input
+                  type="text"
+                  id="delimiter"
+                  className={'textinput'}
+                  value={delimiter}
+                  onChange={handleDelimChange}
+                />
+              </div>
             </div>
           </div>
           <div className="card-grid mb-6">
@@ -213,6 +232,7 @@ function App() {
             now={now}
             startOffset={startOffset}
             endOffset={endOffset}
+            delimiter={delimiter}
             handleCopySuccess={handleCopySuccess}
             handleCopyFail={handleCopyFail}
           />
@@ -224,6 +244,7 @@ function App() {
             now={now * 1000}
             startOffset={startOffset * 1000}
             endOffset={endOffset * 1000}
+            delimiter={delimiter}
             handleCopySuccess={handleCopySuccess}
             handleCopyFail={handleCopyFail}
           />
