@@ -21,13 +21,13 @@ const CopyableRow = (props) => {
     setHovered(false);
   };
   const copyStartEnd = () => {
-    const toCopy = startTime + ":" + endTime;
+    const toCopy = startTime + props.delimiter + endTime;
     copy(toCopy);
     props.handleCopySuccess(toCopy);
   };
 
   return (
-    <div className={"card-grid " + (hovered ? "gap-0 bg-yellow-200 " : "")}>
+    <div className={"card-grid " + (hovered ? "card-grid-hovered bg-yellow-200 " : "")}>
       <div
         onMouseEnter={handleEnter}
         onMouseLeave={handleLeave}
@@ -36,13 +36,14 @@ const CopyableRow = (props) => {
           (hovered ? "" : "app-shadow-sm")}
       >
         <CopyIcon hovered={hovered} />
-        <span className="ml-0.5">start:end</span>
+        <span className="ml-0.5">start{props.delimiter}end</span>
       </div>
       <CopyableTime
         borderColor={startBorderColor}
         alignLeft={true}
         ts={startTime}
         hovered={hovered}
+        delimiter={props.delimiter}
         handleCopySuccess={props.handleCopySuccess}
         handleCopyFail={props.handleCopyFail}
       />
@@ -50,6 +51,7 @@ const CopyableRow = (props) => {
         borderColor={endBorderColor}
         ts={endTime}
         hovered={hovered}
+        delimiter={props.delimiter}
         handleCopySuccess={props.handleCopySuccess}
         handleCopyFail={props.handleCopyFail}
       />
@@ -98,8 +100,8 @@ const CopyableTime = (props) => {
       {!hovered ? <CopyIcon hovered={hovered} /> : ""}
       <div className={"w-full font-medium " +
         (hovered && alignLeft ? "text-right " : "") +
-        (hovered && !alignLeft ? "-ml-10 " : "")}>
-        {props.ts + (hovered && alignLeft ? " : " : "")}
+        (hovered && !alignLeft ? "-ml-8 " : "")}>
+        {props.ts + (hovered && alignLeft ? `${props.delimiter}` : "")}
       </div>
     </div>
   );

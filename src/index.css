@@ -10,7 +10,7 @@
     box-shadow: rgba(17, 12, 46, 0.15) 0px 48px 100px 0px;
 }
 .side-col {
-    @apply col-span-2;
+    @apply col-span-3;
 }
 .main-col {
     @apply col-span-4;
@@ -33,6 +33,9 @@
 .card-grid {
     @apply grid grid-cols-11 gap-4;
 }
+.card-grid-hovered {
+    gap: 0px;
+}
 .copylabel {
     @apply text-gray-500 text-sm;
 }
@@ -44,4 +47,7 @@
 }
 .vspace {
     @apply my-4
+}
+.delimiter {
+    max-width: 4rem;
 }
