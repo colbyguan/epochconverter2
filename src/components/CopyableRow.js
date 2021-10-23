@@ -81,7 +81,6 @@ const CopyableTime = (props) => {
   const alignLeft = props.alignLeft;
 
   const copyTs = () => {
-    console.log(props.ts);
     copy(props.ts);
     props.handleCopySuccess(props.ts);
   };
