@@ -8,7 +8,13 @@ import { timeStringToOffset } from "./helpers";
 const QUICK_TIMESTAMPS = [
   ['-0m', '-5m', '-10m', '-15m', '-30m'],
   ['-1h', '-2h', '-4h', '-8h', '-12h', '-24h', '-36h'],
-  ['-2d', '-4d', '-7d']]
+  ['-1d', '-2d', '-4d', '-7d']]
+const QUICK_LABELS = ['minutes', 'hours', 'days'];
+
+function utcStringToTimeThenDate(utcStr) {
+  const tokens = utcStr.split(' ');
+  return `${tokens[4]} ${tokens[5]} ${tokens[0]} ${tokens[1]} ${tokens[2]} ${tokens[3]}`;
+}
 
 function App() {
   // Time values
@@ -106,8 +112,6 @@ function App() {
     setToast("Fail to copy " + s);
     setToastColor("bg-red-500");
   };
-  console.log(ringInput && lastFocusedWasStart)
-  console.log(ringInput && lastFocusedWasStart && 'test')
 
   return (
     <div className="container mx-auto">
@@ -147,10 +151,13 @@ function App() {
           </div>
         </div> */}
         <div className="card-container">
-          <div className="my-10 text-center">
-            <div className="mb-2"><span className="text-3xl font-bold">{now}</span> as the "now" time</div>
-            <div className="text-sm text-gray-500">locally, that's <span className="font-semibold">{nowDate.toLocaleString()}</span></div>
-            <div className="text-sm text-gray-500">or <span className="font-semibold">{nowDate.toUTCString()}</span></div>
+          <div className="card-grid mt-10 mb-6">
+            <div className="side-col"></div>
+            <div className="double-main-col relative">
+              <div className="mb-2"><span className="text-3xl font-bold">{now}</span> as the "now" time</div>
+              <div className="text-sm text-gray-500"><span className="font-semibold">or, {nowDate.toLocaleTimeString()} {nowDate.toLocaleDateString()}</span> locally </div>
+              <div className="text-sm text-gray-500"><span className="font-semibold">or, {utcStringToTimeThenDate(nowDate.toUTCString())}</span></div>
+            </div>
           </div>
           <div className="card-grid mb-6">
             <div className="side-col"></div>
@@ -168,6 +175,7 @@ function App() {
                       {timestamp}
                     </div>
                   ))}
+                  <span className="ml-1 text-xs font-bold text-gray-400">({QUICK_LABELS[rowIdx]})</span>
                 </div>)}
               <div className="delimiter absolute top-0 right-0">
                 <label

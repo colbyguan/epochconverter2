@@ -11,7 +11,6 @@ const _MULTIPLIERS = {
 // -1 if bad format
 // otherwise seconds to substract from current time
 const timeStringToOffset = s => {
-    console.log(s);
     if (s.length < 3) {
         return 0;
     }
