@@ -151,14 +151,15 @@ function App() {
           </div>
         </div> */}
         <div className="card-container">
-          <div className="w-6/12 mx-auto my-10 text-left">
-            <div className="mb-2"><span className="text-3xl font-semibold">{now}</span> as the "now" time</div>
-            <div className="text-sm text-gray-500"><span className="font-semibold">{nowDate.toLocaleTimeString()} {nowDate.toLocaleDateString()}</span> locally </div>
-            <div className="text-sm text-gray-500"><span className="font-semibold">{utcStringToTimeThenDate(nowDate.toUTCString())}</span></div>
+          <div className="w-6/12 mx-auto mt-10 mb-6 text-left">
+            <div className="mb-2"><span className="text-3xl font-bold">{now}</span> as the "now" time</div>
+            <div className="text-sm text-gray-500"><span className="font-semibold">or, {nowDate.toLocaleTimeString()} {nowDate.toLocaleDateString()}</span> locally </div>
+            <div className="text-sm text-gray-500"><span className="font-semibold">or, {utcStringToTimeThenDate(nowDate.toUTCString())}</span></div>
           </div>
           <div className="card-grid mb-6">
             <div className="side-col"></div>
             <div className="double-main-col relative">
+              <div className="text-sm text-gray-500 mb-2">This is a relative-timestamp alternative to <a href="https://www.epochconverter.com/">epochconverter.com</a>. Click to copy! Click start:end to copy as a pair!</div>
               <div className="textinput-label mb-1">quick fill <span className={'transition-colors ' + flashQuickFillLabel}>{(lastFocusedWasStart ? "start time" : "end time")}:</span></div>
               {QUICK_TIMESTAMPS.map((unit, rowIdx) =>
                 <div className="">
